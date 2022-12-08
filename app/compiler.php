@@ -16,4 +16,15 @@ if($language == "python") {
     $output = shell_exec("C:\Python\python.exe $filePath 2>&1");
     echo $output;
 }
-
+if($language == "c") {
+        $outputExe = $random . ".exe";
+        shell_exec("gcc $filePath -o $outputExe");
+        $output = shell_exec(__DIR__ . "//$outputExe");
+        echo $output;
+    }
+if($language == "cpp") {
+        $outputExe = $random . ".exe";
+        shell_exec("g++ $filePath -o $outputExe");
+        $output = shell_exec(__DIR__ . "//$outputExe");
+        echo $output;
+    }

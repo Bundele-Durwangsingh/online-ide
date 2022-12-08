@@ -2,8 +2,8 @@ let editor;
 
 window.onload = function() {
     editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/c_cpp");
+    editor.setTheme("ace/theme/terminal");
+    editor.session.setMode("ace/mode/python");
 }
 
 function changeLanguage() {
@@ -12,24 +12,25 @@ function changeLanguage() {
 
     if(language == 'php')editor.session.setMode("ace/mode/php");
     else if(language == 'python')editor.session.setMode("ace/mode/python");
-
+    else if(language == 'c' || language == 'cpp')editor.session.setMode("ace/mode/c_cpp");
 }
+
+
+
 
 function executeCode() {
 
-    $.ajax({
+    
+$.ajax({
+url: "/ide/app/compiler.php",
+method: "POST",
+data: {
+language: $("#languages").val(),
+code: editor.getSession().getValue()
+    },
 
-        url: "/ide/app/compiler.php",
-
-        method: "POST",
-
-        data: {
-            language: $("#languages").val(),
-            code: editor.getSession().getValue()
-        },
-
-        success: function(response) {
-            $(".output").text(response)
-        }
+success: function(response) {
+    $(".output").text(response)
+    }
     })
 }
